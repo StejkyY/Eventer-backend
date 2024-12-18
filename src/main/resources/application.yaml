@@ -1,0 +1,11 @@
+ktor:
+  application:
+    modules:
+      - eventer.project.ApplicationKt.module
+  deployment:
+    port: 8080
+db:
+  driver: "org.postgresql.Driver"
+  jdbcUrl: "jdbc:postgresql://localhost:5432/agenda_app"
+  username: "postgres"
+  password: "XXmamstte12"
