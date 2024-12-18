@@ -23,6 +23,7 @@ class SessionRepository {
             startTime = row[SessionDao.startTime],
             duration = row[SessionDao.duration],
             description = row[SessionDao.description],
+            dayOrder = row[SessionDao.dayOrder],
             type = sessionType,
             location = sessionLocation,
             eventId = row[SessionDao.eventId]
@@ -56,6 +57,7 @@ class SessionRepository {
                     it[startTime] = addedSession.startTime!!
                     it[duration] = addedSession.duration!!
                     it[description] = addedSession.description
+                    it[dayOrder] = addedSession.dayOrder!!
                     it[typeId] = addedSession.type!!.id!!
                     it[locationId] = addedSession.location!!.id!!
                     it[eventId] = addedSession.eventId!!
@@ -68,6 +70,7 @@ class SessionRepository {
                     it[startTime] = updatedSession.startTime!!
                     it[duration] = updatedSession.duration!!
                     it[description] = updatedSession.description
+                    it[dayOrder] = updatedSession.dayOrder!!
                     it[typeId] = updatedSession.type?.id!!
                     it[locationId] = updatedSession.location?.id!!
                     it[eventId] = updatedSession.eventId!!
@@ -88,6 +91,7 @@ class SessionRepository {
                 it[startTime] = session.startTime!!
                 it[duration] = session.duration!!
                 it[description] = session.description
+                it[dayOrder] = session.dayOrder!!
                 it[typeId] = session.type!!.id!!
                 it[locationId] = session.location!!.id!!
                 it[eventId] = session.eventId!!
@@ -106,6 +110,7 @@ class SessionRepository {
                 it[startTime] = session.startTime!!
                 it[duration] = session.duration!!
                 it[description] = session.description
+                it[dayOrder] = session.dayOrder!!
                 it[typeId] = session.type?.id!!
                 it[locationId] = session.location?.id!!
                 it[eventId] = session.eventId!!

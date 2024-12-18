@@ -12,6 +12,7 @@ object SessionDao : Table("sessions") {
     val startTime = time("start_time")
     val duration = integer("duration")
     val description = varchar("description", 500).nullable()
+    val dayOrder = integer("day_order")
     val typeId = reference("id_type", TypeDao.id, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
     val locationId = reference("id_location", LocationDao.id, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
     val eventId = reference("id_event", EventDao.id, ReferenceOption.CASCADE, ReferenceOption.CASCADE)

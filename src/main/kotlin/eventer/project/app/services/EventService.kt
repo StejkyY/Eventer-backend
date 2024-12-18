@@ -42,6 +42,8 @@ class EventService() {
     }
 
     suspend fun addEvent(userId: Int, event: Event): Event {
+        println(userId)
+        println(event)
         var eventAdded = eventRepository.addEvent(userId, event)
         eventAdded ?: throw SomethingWentWrongException("Error when saving event.")
         return eventAdded
