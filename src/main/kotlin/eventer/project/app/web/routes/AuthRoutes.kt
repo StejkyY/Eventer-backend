@@ -11,16 +11,16 @@ fun Application.authRoutes() {
 
     routing {
 
-        post("auth/login") {
+        post("/auth/login") {
             authController.userLogin(call)
         }
         authenticate {
-            post("auth/logout") {
+            post("/auth/logout") {
                 authController.userLogout(call)
             }
         }
 
-        post ("auth/register"){
+        post ("/auth/register"){
             authController.userRegister(call)
         }
     }

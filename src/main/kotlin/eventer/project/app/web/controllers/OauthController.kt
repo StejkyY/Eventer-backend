@@ -59,10 +59,10 @@ class OauthController {
             if (newAccessToken != null) {
                 call.respond(HttpStatusCode.OK, mapOf("access_token" to newAccessToken))
             } else {
-                call.respond(HttpStatusCode.Unauthorized, mapOf("access_token" to newAccessToken))
+                call.respond(HttpStatusCode.Unauthorized)
             }
         } catch (e: Exception) {
-            call.respond(HttpStatusCode.Unauthorized, mapOf("access_token" to null))
+            call.respond(HttpStatusCode.Unauthorized)
         }
     }
 
