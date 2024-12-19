@@ -52,7 +52,10 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
                     clientId = System.getenv("GOOGLE_CLIENT_ID"),
                     clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
                     defaultScopes = listOf("https://www.googleapis.com/auth/calendar.events.owned"),
-                    extraAuthParameters = listOf("access_type" to "offline"),
+                    extraAuthParameters = listOf(
+                        "access_type" to "offline",
+                        "prompt" to "consent"
+                    ),
                     onStateCreated = { call, state ->
                         //saves new state with redirect url value
                         call.request.queryParameters["redirectUrl"]?.let {
@@ -73,10 +76,15 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
                     requestMethod = HttpMethod.Post,
                     clientId = System.getenv("MICROSOFT_CLIENT_ID"),
                     clientSecret = System.getenv("MICROSOFT_CLIENT_SECRET"),
-                    defaultScopes = listOf("https://graph.microsoft.com/Calendars.ReadWrite", "https://graph.microsoft.com/User.Read"),
+                    defaultScopes = listOf(
+                        "https://graph.microsoft.com/Calendars.ReadWrite",
+                        "https://graph.microsoft.com/User.Read",
+                        "offline_access"
+                    ),
                     extraAuthParameters = listOf(
                         "response_mode" to "query",
-                        "prompt" to "select_account"
+                        "prompt" to "select_account",
+                        "prompt" to "consent"
                     ),
                     onStateCreated = { call, state ->
                         //saves new state with redirect url value

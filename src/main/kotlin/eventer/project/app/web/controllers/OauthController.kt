@@ -23,8 +23,9 @@ class OauthController {
                             name = "GOOGLE_REFRESH_TOKEN",
                             value = principal.refreshToken.toString(),
                             httpOnly = true,
-                            secure = true,
-                            path = "/oauth/google/token-refresh"
+//                            secure = true,
+                            path = "/",
+                            maxAge = 60 * 60 * 24 * 7
                         )
                     )
                     call.respondRedirect("$redirect#access_token=${principal.accessToken}&")
