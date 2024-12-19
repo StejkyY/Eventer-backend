@@ -13,6 +13,7 @@ val valiktorVersion: String by project
 val jwtVersion: String by project
 
 plugins {
+    application
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm") version "2.1.0"
     id("io.ktor.plugin") version "3.0.1"
@@ -24,7 +25,6 @@ version = "0.0.1"
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
-
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
