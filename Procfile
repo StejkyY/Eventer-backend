@@ -1,0 +1,1 @@
+web: ./build/install/eventer_backend/bin/eventer_backend

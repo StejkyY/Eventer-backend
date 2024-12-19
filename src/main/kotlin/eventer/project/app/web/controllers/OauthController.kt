@@ -41,24 +41,28 @@ class OauthController {
         val clientId = System.getenv("GOOGLE_CLIENT_ID")
         val clientSecret = System.getenv("GOOGLE_CLIENT_SECRET")
 
-        val response: Map<String, Any> = applicationHttpClient.post(tokenUrl) {
-            contentType(ContentType.Application.FormUrlEncoded)
-            setBody(
-                listOf(
-                    "client_id" to clientId,
-                    "client_secret" to clientSecret,
-                    "refresh_token" to refreshToken,
-                    "grant_type" to "refresh_token"
-                ).formUrlEncode()
-            )
-        }.body()
+        try {
+            val response: Map<String, Any> = applicationHttpClient.post(tokenUrl) {
+                contentType(ContentType.Application.FormUrlEncoded)
+                setBody(
+                    listOf(
+                        "client_id" to clientId,
+                        "client_secret" to clientSecret,
+                        "refresh_token" to refreshToken,
+                        "grant_type" to "refresh_token"
+                    ).formUrlEncode()
+                )
+            }.body()
 
-        val newAccessToken = response["access_token"] as? String
+            val newAccessToken = response["access_token"] as? String
 
-        if (newAccessToken != null) {
-            call.respond("access_token" to newAccessToken)
-        } else {
-            call.respond(HttpStatusCode.InternalServerError, "Failed to retrieve new access token")
+            if (newAccessToken != null) {
+                call.respond(HttpStatusCode.OK, mapOf("access_token" to newAccessToken))
+            } else {
+                call.respond(HttpStatusCode.Unauthorized, mapOf("access_token" to newAccessToken))
+            }
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.Unauthorized, mapOf("access_token" to null))
         }
     }
 
