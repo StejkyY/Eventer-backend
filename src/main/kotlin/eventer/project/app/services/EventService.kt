@@ -27,6 +27,11 @@ class EventService() {
         return eventList
     }
 
+    suspend fun getAllEventsList(): List<Event> {
+        val eventList = eventRepository.getEventsList()
+        return eventList
+    }
+
     suspend fun getUserEventsList(userId: Int): List<Event> {
         return eventRepository.getUserEventsList(userId)
     }
@@ -49,7 +54,7 @@ class EventService() {
         return eventAdded
     }
 
-    suspend fun updateEvent(userId: Int, event: Event): Event {
+    suspend fun updateEvent(userId: Int? = null, event: Event): Event {
         val receivedEvent = eventRepository.updateEvent(userId, event)
         receivedEvent ?: throw SomethingWentWrongException("Error when updating event.")
         return receivedEvent

@@ -29,9 +29,9 @@ object Db {
             SchemaUtils.create(GroupRoleDao)
             SchemaUtils.create(CustomScheduleDao)
             SchemaUtils.create(SessionToCustomScheduleDao)
-//            initializeDefaultSessionTypes()
-//            initializeDefaultEventRoles()
-//            initializeDefaultGroupRoles()
+            initializeDefaultSessionTypes()
+            initializeDefaultEventRoles()
+            initializeDefaultGroupRoles()
         }
     }
 

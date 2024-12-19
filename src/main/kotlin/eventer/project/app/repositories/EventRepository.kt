@@ -107,7 +107,7 @@ class EventRepository {
         }
     }
 
-    suspend fun updateEvent(userId: Int, event: Event): Event? {
+    suspend fun updateEvent(userId: Int? = null, event: Event): Event? {
         val id = event.id
         id ?: throw NotFoundException("Event not found")
         Db.dbQuery {
@@ -124,7 +124,8 @@ class EventRepository {
                 it[privacy] = event.privacy.toString()
             }
         }
-        return getEventByIdWithRole(userId, id)
+        if(userId == null) return getEventById(id)
+        else return getEventByIdWithRole(userId, id)
     }
 
     suspend fun deleteEventById(id: Int): Boolean {
