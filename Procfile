@@ -1,1 +1,1 @@
-web: ./build/install/eventer_backend/bin/eventer_backend
+web: ./build/install/eventer_backend/bin/eventer_backend -port=$PORT -P:db.driver=org.postgresql.Driver -P:db.jdbcUrl=$JDBC_DATABASE_URL -P:db.username=$JDBC_DATABASE_USERNAME -P:db.password=$JDBC_DATABASE_PASSWORD
