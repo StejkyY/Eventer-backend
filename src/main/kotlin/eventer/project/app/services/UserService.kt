@@ -41,7 +41,7 @@ class UserService {
     suspend fun updateUser(user: User): User {
         val receivedUser = userRepository.updateUser(user)
         receivedUser ?: throw SomethingWentWrongException("Error when updating user.")
-        return receivedUser
+        return receivedUser.copy(token = generateJwtToken(receivedUser))
     }
 
     suspend fun deleteUserById(id: Int): Boolean {
@@ -52,7 +52,7 @@ class UserService {
 
     suspend fun changeUserPasswordById(id: Int, passwordChange: UserPasswordChange): Boolean {
         val result = userRepository.changeUserPasswordById(id, passwordChange)
-        if(!result) throw SomethingWentWrongException("Error when changing user password.")
+        if(!result) throw SomethingWentWrongException("Current password is not correct.")
         return result
     }
 

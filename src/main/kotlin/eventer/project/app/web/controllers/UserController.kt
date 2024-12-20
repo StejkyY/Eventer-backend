@@ -45,7 +45,7 @@ class UserController {
         val user = UserDTO(call.authentication.principal())
             call.receive<eventer.project.app.models.dto.UserPasswordDTO>().also { passwordDTO ->
                 userService.changeUserPasswordById(user.user?.id!!, passwordDTO.validate()).apply {
-                    call.respond(HttpStatusCode.OK)
+                    call.respond(mapOf("status" to "success", "message" to "User password changed"))
                 }
             }
     }
