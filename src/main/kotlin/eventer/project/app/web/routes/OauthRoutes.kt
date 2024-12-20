@@ -20,7 +20,7 @@ fun Application.oauthRoutes() {
         }
         authenticate {
             get("/oauth/google/token-refresh") {
-                oauthController.accessTokenRefresh(call)
+                oauthController.googleAccessTokenRefresh(call)
             }
         }
 
@@ -34,7 +34,7 @@ fun Application.oauthRoutes() {
         }
         authenticate {
             get("/oauth/microsoft/token-refresh") {
-                oauthController.accessTokenRefresh(call)
+                oauthController.microsoftAccessTokenRefresh(call)
             }
         }
     }

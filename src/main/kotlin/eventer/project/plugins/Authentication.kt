@@ -83,8 +83,7 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
                     ),
                     extraAuthParameters = listOf(
                         "response_mode" to "query",
-                        "prompt" to "select_account",
-                        "prompt" to "consent"
+                        "prompt" to "select_account"
                     ),
                     onStateCreated = { call, state ->
                         //saves new state with redirect url value
