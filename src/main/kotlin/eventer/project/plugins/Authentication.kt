@@ -14,6 +14,7 @@ import eventer.project.utils.JwtProvider.issuer
 import eventer.project.app.web.controllers.UserController
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.config.*
 import kotlinx.serialization.json.Json
 
 val applicationHttpClient = HttpClient(CIO) {
@@ -24,7 +25,7 @@ val applicationHttpClient = HttpClient(CIO) {
 
 val redirects = mutableMapOf<String, String>()
 
-fun Application.configureAuthentication(httpClient: HttpClient = applicationHttpClient) {
+fun Application.configureAuthentication(httpClient: HttpClient = applicationHttpClient, config: ApplicationConfig) {
 
     val userController = UserController()
 
@@ -42,7 +43,7 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
             }
         }
         oauth("auth-oauth-google") {
-            urlProvider = { "http://localhost:8080/oauth/google/callback" }
+            urlProvider = { config.propertyOrNull("oauth.google.callbackUrl")?.getString().toString() }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
@@ -67,7 +68,7 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
             client = httpClient
         }
         oauth("auth-oauth-microsoft") {
-            urlProvider = { "http://localhost:8080/oauth/microsoft/callback" }
+            urlProvider = { config.propertyOrNull("oauth.microsoft.callbackUrl")?.getString().toString() }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "microsoft",

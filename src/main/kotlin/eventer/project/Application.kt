@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     Db.init(environment.config)
-    configureAuthentication()
+    configureAuthentication(config = environment.config)
     configureLogging()
     configureRouting()
     configureScheduling()
