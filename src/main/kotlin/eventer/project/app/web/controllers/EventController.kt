@@ -18,9 +18,12 @@ class EventController {
 
     suspend fun getAllEventsList(call: ApplicationCall) {
         val user: User? = call.authentication.principal()
-        eventService.getAllEventsList(user?.id!!, null).apply {
+        eventService.getUserEventsList(user?.id!!).apply {
             call.respond(eventer.project.app.models.dto.EventsDTO(this))
         }
+//        eventService.getAllEventsList(user?.id!!, null).apply {
+//            call.respond(eventer.project.app.models.dto.EventsDTO(this))
+//        }
     }
 
     suspend fun getUserEventsList(call: ApplicationCall) {
