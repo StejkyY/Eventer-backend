@@ -23,7 +23,6 @@ class OauthController {
                             name = "GOOGLE_REFRESH_TOKEN",
                             value = principal.refreshToken.toString(),
                             httpOnly = true,
-                            secure = true,
                             path = "/",
                             maxAge = 60 * 60 * 24 * 7
                         )
@@ -95,7 +94,6 @@ class OauthController {
                             name = "MICROSOFT_REFRESH_TOKEN",
                             value = principal.refreshToken.toString(),
                             httpOnly = true,
-                            secure = true,
                             path = "/",
                             maxAge = 60 * 60 * 24 * 90
                         )
