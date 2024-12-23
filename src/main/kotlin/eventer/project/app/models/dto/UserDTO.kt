@@ -15,9 +15,9 @@ data class UserDTO(val user: User? = null) {
     fun validate(): User {
         if(user != null) {
             return org.valiktor.validate(user) {
-                validate(User::firstName).hasSize(1, 50)
-                validate(User::lastName).hasSize(1, 50)
-                validate(User::email).isEmail()
+                validate(User::firstName).isNotBlank().hasSize(1, 50)
+                validate(User::lastName).isNotBlank().hasSize(1, 50)
+                validate(User::email).isNotBlank().isEmail()
             }
         } else throw MissingRequestBodyException("User is invalid.")
     }

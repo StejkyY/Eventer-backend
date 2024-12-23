@@ -73,7 +73,6 @@ object Db {
 
     private fun hikari(config: ApplicationConfig): HikariDataSource {
         val hikariConfig = HikariConfig()
-        println(config.keys())
         hikariConfig.driverClassName = config.propertyOrNull("db.driver")?.getString()
         hikariConfig.jdbcUrl = config.propertyOrNull("db.jdbcUrl")?.getString()
         hikariConfig.username = config.propertyOrNull("db.username")?.getString()

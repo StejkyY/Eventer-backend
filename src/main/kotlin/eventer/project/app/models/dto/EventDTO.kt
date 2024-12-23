@@ -3,6 +3,8 @@ package eventer.project.app.models.dto
 import eventer.project.app.errorhandler.NotFoundException
 import eventer.project.app.models.objects.Event
 import kotlinx.serialization.Serializable
+import org.valiktor.functions.hasSize
+import org.valiktor.functions.isLessThan
 import org.valiktor.functions.isNotBlank
 import org.valiktor.functions.isNotNull
 
@@ -11,8 +13,8 @@ data class EventDTO(val event: Event? = null) {
     fun validate(): Event {
         if(event != null) {
             return org.valiktor.validate(event) {
-                validate(Event::name).isNotBlank()
-                validate(Event::location).isNotNull()
+                validate(Event::name).isNotBlank().hasSize(1, 100)
+                validate(Event::location).isNotNull().hasSize(1, 100)
                 validate(Event::startDate).isNotNull()
                 validate(Event::endDate).isNotNull()
                 validate(Event::type).isNotNull()

@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.time
 
 object SessionDao : Table("sessions") {
     val id = integer("id_session").autoIncrement()
-    val name = varchar("name", 50)
+    val name = varchar("name", 100)
     val date = date("date")
     val startTime = time("start_time")
     val duration = integer("duration")
