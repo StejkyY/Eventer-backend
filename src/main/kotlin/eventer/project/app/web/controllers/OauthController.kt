@@ -35,7 +35,7 @@ class OauthController {
                             maxAge = 60 * 60 * 24 * 7
                         )
                     )
-                    call.respondRedirect("$redirect#access_token=${principal.accessToken}&")
+                    call.respondRedirect("$redirect?access_token=${principal.accessToken}&")
                 }
             }
         }
@@ -124,7 +124,7 @@ class OauthController {
                             maxAge = 60 * 60 * 24 * 90
                         )
                     )
-                    call.respondRedirect("$redirect#access_token=${principal.accessToken}")
+                    call.respondRedirect("$redirect?access_token=${principal.accessToken}")
                 }
             }
         }

@@ -16,7 +16,7 @@ fun Application.eventRoutes() {
     routing {
         authenticate {
             get("/events") {
-                eventController.getAllEventsList(call)
+                eventController.getUserEventsList(call)
             }
             get("/events/{id}") {
                 eventController.getEventById(call)
