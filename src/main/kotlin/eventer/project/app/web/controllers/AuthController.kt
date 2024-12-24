@@ -13,6 +13,9 @@ class AuthController {
 
     var userService = UserService()
 
+    /**
+     * User login by given email and password.
+     */
     suspend fun userLogin(call: ApplicationCall) {
         call.receive<UserDTO>().apply {
             userService.authenticate(this.validateLogin()).apply {
@@ -21,10 +24,16 @@ class AuthController {
         }
     }
 
+    /**
+     * Logs out currently authenticated user.
+     */
     suspend fun userLogout(call: ApplicationCall) {
         call.respondRedirect("/")
     }
 
+    /**
+     * New user register.
+     */
     suspend fun userRegister(call: ApplicationCall) {
         call.receive<eventer.project.app.models.dto.UserDTO>().also { userDTO ->
             userService.addUser(userDTO.validate()).apply {

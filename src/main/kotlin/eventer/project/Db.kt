@@ -71,6 +71,10 @@ object Db {
         }
     }
 
+    /**
+     * HikariCP pool configuration
+     * Sets database connection based on the configuration.
+     */
     private fun hikari(config: ApplicationConfig): HikariDataSource {
         val hikariConfig = HikariConfig()
         hikariConfig.driverClassName = config.propertyOrNull("db.driver")?.getString()
@@ -84,6 +88,10 @@ object Db {
         return HikariDataSource(hikariConfig)
     }
 
+    /**
+     * Launches databse query by executing given block of code in a transaction
+     * in sepearate thread
+     */
     suspend fun <T> dbQuery(block: Transaction.() -> T): T = withContext(Dispatchers.IO) {
         transaction {
             block()

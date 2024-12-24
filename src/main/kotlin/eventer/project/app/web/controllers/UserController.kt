@@ -15,14 +15,23 @@ class UserController {
 
     var userService = UserService()
 
+    /**
+     * Retrieves the currently authenticated user.
+     */
     suspend fun getCurrentUser(call: ApplicationCall) {
         call.respond(eventer.project.app.models.dto.UserDTO(call.authentication.principal()))
     }
 
+    /**
+     * Retrieves user by given email address.
+     */
     suspend fun getUserByEmail(email: String): User {
         return userService.getUserByEmail(email)
     }
 
+    /**
+     * Updates user by ID in the request.
+     */
     suspend fun updateUserById(call: ApplicationCall) {
             val id = call.parameters["id"]
             if(id != null) {
@@ -34,6 +43,9 @@ class UserController {
             } else throw MissingRequestBodyException("Invalid user id")
     }
 
+    /**
+     * Deletes the currently authenticated user.
+     */
     suspend fun deleteCurrentUser(call: ApplicationCall) {
         val user = UserDTO(call.authentication.principal())
         userService.deleteUserById(user.user?.id!!). apply {
@@ -41,6 +53,9 @@ class UserController {
         }
     }
 
+    /**
+     * Changes the currently authenticated user's password.
+     */
     suspend fun changeCurrentUserPassword(call: ApplicationCall) {
         val user = UserDTO(call.authentication.principal())
             call.receive<eventer.project.app.models.dto.UserPasswordDTO>().also { passwordDTO ->

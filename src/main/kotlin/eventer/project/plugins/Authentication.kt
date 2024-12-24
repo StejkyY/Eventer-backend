@@ -43,7 +43,7 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
             }
         }
         oauth("auth-oauth-google") {
-            urlProvider = { config.propertyOrNull("oauth.google.callbackUrl")?.getString().toString() }
+            urlProvider = { config.propertyOrNull("oauth.google.callbackUrl")?.getString() ?: "http://localhost:8080/oauth/google/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
@@ -68,7 +68,7 @@ fun Application.configureAuthentication(httpClient: HttpClient = applicationHttp
             client = httpClient
         }
         oauth("auth-oauth-microsoft") {
-            urlProvider = { config.propertyOrNull("oauth.microsoft.callbackUrl")?.getString().toString() }
+            urlProvider = { config.propertyOrNull("oauth.microsoft.callbackUrl")?.getString() ?: "http://localhost:8080/oauth/microsoft/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "microsoft",

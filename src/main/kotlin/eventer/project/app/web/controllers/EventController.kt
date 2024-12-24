@@ -16,16 +16,19 @@ class EventController {
 
     var eventService = EventService()
 
+    /**
+     * Retrieves all events.
+     */
     suspend fun getAllEventsList(call: ApplicationCall) {
         val user: User? = call.authentication.principal()
         eventService.getUserEventsList(user?.id!!).apply {
             call.respond(eventer.project.app.models.dto.EventsDTO(this))
         }
-//        eventService.getAllEventsList(user?.id!!, null).apply {
-//            call.respond(eventer.project.app.models.dto.EventsDTO(this))
-//        }
     }
 
+    /**
+     * Retrieves all events for currently authenticated user.
+     */
     suspend fun getUserEventsList(call: ApplicationCall) {
         val user: User? = call.authentication.principal()
         eventService.getUserEventsList(user?.id!!).apply {
@@ -33,12 +36,18 @@ class EventController {
         }
     }
 
+    /**
+     * Retrieves all event roles.
+     */
     suspend fun getEventRoles(call: ApplicationCall) {
         eventService.getEventRolesList().apply {
             call.respond(eventer.project.app.models.dto.EventRolesDTO(this))
         }
     }
 
+    /**
+     * Retrieves an event by its ID from the request.
+     */
     suspend fun getEventById(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {
@@ -49,6 +58,9 @@ class EventController {
         } else throw MissingRequestBodyException("Invalid event id")
     }
 
+    /**
+     * Adds an event.
+     */
     suspend fun addEvent(call: ApplicationCall) {
         val user: User? = call.authentication.principal()
         call.receive<eventer.project.app.models.dto.EventDTO>().also { eventDTO ->
@@ -58,6 +70,9 @@ class EventController {
         }
     }
 
+    /**
+     * Updates an event by ID from the request.
+     */
     suspend fun updateEvent(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {
@@ -70,6 +85,9 @@ class EventController {
         } else throw MissingRequestBodyException("Invalid event id")
     }
 
+    /**
+     * Deletes an event by ID from the request.
+     */
     suspend fun deleteEvent(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {
@@ -79,6 +97,10 @@ class EventController {
         } else throw MissingRequestBodyException("Invalid event id")
     }
 
+    /**
+     * Updates all session for an event by event ID from the request.
+     * Adds new sessions, updates sessions for updating and deletes removed sessions.
+     */
     suspend fun updateEventAgendaSessions(call:ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {

@@ -21,14 +21,24 @@ class EventStateScheduler() {
         }
     })
 
+    /**
+     * Starts the scheduler to periodically check and update event states.
+     * The task runs every 1 hour.
+     */
     fun startScheduler() {
         scheduler.scheduleExecution(Every(1, TimeUnit.HOURS))
     }
 
+    /**
+     * Stops the scheduler.
+     */
     fun stopScheduler() {
         scheduler.stop()
     }
 
+    /**
+     * Logic for checking and updating the states of events based on their start and end dates.
+     */
     private suspend fun checkAndUpdateEventStates() {
         val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         val events = eventService.getAllEventsList()

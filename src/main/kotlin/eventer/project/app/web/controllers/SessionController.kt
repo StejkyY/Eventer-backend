@@ -13,6 +13,9 @@ class SessionController {
 
    var sessionService = SessionService()
 
+    /**
+     * Retrieves all sessions for an event by event ID in the request.
+     */
     suspend fun getEventSessions(call: ApplicationCall) {
         val id = call.parameters["id"]
         if (id != null) {
@@ -22,6 +25,9 @@ class SessionController {
         } else throw MissingRequestBodyException("Invalid event id")
     }
 
+    /**
+     * Adds an event session.
+     */
     suspend fun addSession(call: ApplicationCall) {
         call.receive<eventer.project.app.models.dto.SessionDTO>().also { sessionDTO ->
             sessionService.addSession(sessionDTO.validate()).apply {
@@ -30,6 +36,9 @@ class SessionController {
         }
     }
 
+    /**
+     * Updates an event session by ID in the request.
+     */
     suspend fun updateSession(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {
@@ -41,6 +50,9 @@ class SessionController {
         } else throw MissingRequestBodyException("Invalid session id")
     }
 
+    /**
+     * Deletes session by ID from the request.
+     */
     suspend fun deleteSession(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {

@@ -11,13 +11,9 @@ object JwtProvider {
     const val issuer = "eventer"
     const val audience = "eventer-audience"
 
-    val verifier: JWTVerifier = JWT
-        .require(Cipher.algorithm)
-        .withIssuer(issuer)
-        .build()
-
-    fun decodeJWT(token: String): DecodedJWT = JWT.require(Cipher.algorithm).build().verify(token)
-
+    /**
+     * Creates a JSON Web Token for a given user.
+     */
     fun createJWT(user: User): String = JWT.create()
         .withIssuedAt(Date())
         .withSubject(user.email)

@@ -13,6 +13,14 @@ import io.ktor.server.sessions.*
 
 class OauthController {
 
+    /**
+     * Handles the Google OAuth callback.
+     * Extracts the OAuth response, saves the refresh token as a http only cookie
+     * and redirects the user.
+     *
+     * Age of the cookie is set to one week according to the length of the
+     * Google refresh token validity
+     */
     suspend fun oauthGoogleCallback(call: ApplicationCall) {
         val currentPrincipal: OAuthAccessTokenResponse.OAuth2? = call.principal()
         currentPrincipal?.let { principal ->
@@ -33,6 +41,10 @@ class OauthController {
         }
     }
 
+    /**
+     * Requests a new access token using a refresh token.
+     * Sends a POST request to the token URL and responds with the new access token.
+     */
     suspend fun receiveNewAccessToken(call: ApplicationCall,
                                       refreshToken: String,
                                       tokenUrl: String,
@@ -61,6 +73,9 @@ class OauthController {
         }
     }
 
+    /**
+     * Refreshes the Google OAuth access token using the saved refresh token.
+     */
     suspend fun googleAccessTokenRefresh(call: ApplicationCall) {
         val refreshToken = call.request.cookies["GOOGLE_REFRESH_TOKEN"]
             ?: return call.respond(HttpStatusCode.Unauthorized, "Refresh token not found")
@@ -72,6 +87,9 @@ class OauthController {
         receiveNewAccessToken(call, refreshToken, tokenUrl, clientId, clientSecret)
     }
 
+    /**
+     * Refreshes the Microsoft OAuth access token using the saved refresh token.
+     */
     suspend fun microsoftAccessTokenRefresh(call: ApplicationCall) {
         val refreshToken = call.request.cookies["MICROSOFT_REFRESH_TOKEN"]
             ?: return call.respond(HttpStatusCode.Unauthorized, "Refresh token not found")
@@ -83,6 +101,14 @@ class OauthController {
         receiveNewAccessToken(call, refreshToken, tokenUrl, clientId, clientSecret)
     }
 
+    /**
+     * Handles the Microsoft OAuth callback.
+     * Extracts the OAuth response, saves the refresh token as a http only cookie
+     * and redirects the user.
+     *
+     * Age of the cookie is set to 90 days according to the length of the
+     * Microsoft refresh token validity
+     */
     suspend fun oauthMicrosoftCallback(call: ApplicationCall) {
         val currentPrincipal: OAuthAccessTokenResponse.OAuth2? = call.principal()
 

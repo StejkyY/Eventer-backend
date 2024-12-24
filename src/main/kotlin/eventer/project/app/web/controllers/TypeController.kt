@@ -12,12 +12,18 @@ class TypeController {
 
    var typeService = TypeService()
 
+    /**
+     * Retrieves all session types in a list.
+     */
     suspend fun getAllTypesList(call: ApplicationCall) {
         typeService.getTypesList().apply {
             call.respond(eventer.project.app.models.dto.TypesDTO(this))
         }
     }
 
+    /**
+     * Adds an event type.
+     */
     suspend fun addType(call: ApplicationCall) {
         call.receive<eventer.project.app.models.dto.TypeDTO>().also { typeDTO ->
             typeService.addType(typeDTO.validate()).apply {

@@ -12,6 +12,9 @@ class LocationController {
 
     var locationService = LocationService()
 
+    /**
+     * Retrieves all session locations for an event by event ID given in request.
+     */
     suspend fun getEventLocations(call: ApplicationCall) {
         val id = call.parameters["id"]
         if (id != null) {
@@ -21,6 +24,9 @@ class LocationController {
         } else throw MissingRequestBodyException("Invalid event id")
     }
 
+    /**
+     * Adds sessions location.
+     */
     suspend fun addLocation(call: ApplicationCall) {
         call.receive<eventer.project.app.models.dto.LocationDTO>().also { locationDTO ->
             locationService.addLocation(locationDTO.validate()).apply {
@@ -29,7 +35,9 @@ class LocationController {
         }
     }
 
-
+    /**
+     * Deletes sessions location by ID from the request.
+     */
     suspend fun deleteLocation(call: ApplicationCall) {
         val id = call.parameters["id"]
         if(id != null) {

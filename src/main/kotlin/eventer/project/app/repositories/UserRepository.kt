@@ -12,6 +12,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class UserRepository {
+
+    /**
+     * Converts a database row into a `User` object.
+     */
     private fun toUser(row: ResultRow): User =
         User(
             id = row[UserDao.id],
@@ -22,6 +26,9 @@ class UserRepository {
             userIdentityId = row[UserDao.userIdentityId]
         )
 
+    /**
+     * Returns a user by email from the database.
+     */
     suspend fun getUserByEmail(email: String): User? {
         return Db.dbQuery {
             UserDao.selectAll().where{
@@ -30,6 +37,9 @@ class UserRepository {
         }
     }
 
+    /**
+     * Returns a user by his ID from the database.
+     */
     suspend fun getUserById(id: Int): User? {
         return Db.dbQuery {
             UserDao.selectAll().where{
@@ -38,6 +48,10 @@ class UserRepository {
         }
     }
 
+    /**
+     * Inserts a user into the database.
+     * Also inserts local identity provider connected to the user into the database.
+     */
     suspend fun addUser(user: User): User? {
         val identityKey = Db.dbQuery {
             (UserIdentityDao.insert {
@@ -56,6 +70,9 @@ class UserRepository {
         return getUserById(key)
     }
 
+    /**
+     * Updates given user in the database.
+     */
     suspend fun updateUser(user: User): User? {
         val id = user.id
         id ?: throw NotFoundException("User not found.")
@@ -69,6 +86,9 @@ class UserRepository {
         return getUserById(id)
     }
 
+    /**
+     * Deletes user by his ID from the database.
+     */
     suspend fun deleteUserById(id: Int): Boolean {
         val user = getUserById(id)
         return Db.dbQuery {
@@ -77,6 +97,10 @@ class UserRepository {
         }
     }
 
+    /**
+     * Changes user password by his ID.
+     * Checks that the hash of given current password is same as the one stored in the database.
+     */
     suspend fun changeUserPasswordById(id: Int, passwordChange: UserPasswordChange): Boolean {
         val currentUser = getUserById(id)
         if(DigestUtils.sha256Hex(passwordChange.currentPassword) != currentUser?.password) {

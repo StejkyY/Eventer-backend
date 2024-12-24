@@ -12,6 +12,9 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class SessionRepository {
 
+    /**
+     * Converts a database row into an `Session` object.
+     */
     private fun toSession(row: ResultRow): Session {
         val sessionType = runBlocking {getTypeById(row[SessionDao.typeId])}
         val sessionLocation = runBlocking {getLocationById(row[SessionDao.locationId])}
@@ -30,6 +33,9 @@ class SessionRepository {
         )
     }
 
+    /**
+     * Returns a list of session for an event by its ID from the database.
+     */
     suspend fun getSessionListByEventId(id: Int): List<Session> {
         return Db.dbQuery {
             SessionDao.selectAll().where {
@@ -38,6 +44,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Returns a session by its ID from the database.
+     */
     suspend fun getSessionById(id: Int): Session? {
         return Db.dbQuery {
             SessionDao.selectAll().where{
@@ -46,6 +55,10 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Updates event agenda in the database.
+     * Adds new sessions, updates edited sessions and deletes removed sessions.
+     */
     suspend fun updateEventSessionAgenda(addedSessions: List<Session>,
                                          updatedSessions: List<Session>,
                                          deletedSessions: List<Session>) {
@@ -83,6 +96,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Inserts a session into the database.
+     */
     suspend fun addSession(session: Session): Session? {
         val key = Db.dbQuery {
             (SessionDao.insert {
@@ -100,6 +116,9 @@ class SessionRepository {
         return getSessionById(key)
     }
 
+    /**
+     * Updates a session in the database by its ID
+     */
     suspend fun updateSession(session: Session): Session? {
         val id = session.id
         id ?: throw NotFoundException("Session not found")
@@ -119,6 +138,9 @@ class SessionRepository {
         return getSessionById(id)
     }
 
+    /**
+     * Deletes a session by its ID from the database.
+     */
     suspend fun deleteSessionById(id: Int): Boolean {
         return Db.dbQuery {
             SessionDao.deleteWhere { (SessionDao.id eq id) } > 0
@@ -126,6 +148,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Converts a database row into a `Type` object.
+     */
     private fun toType(row: ResultRow): Type {
         return Type(
             id = row[TypeDao.id],
@@ -133,12 +158,18 @@ class SessionRepository {
         )
     }
 
+    /**
+     * Returns a list of all session types from the database.
+     */
     suspend fun getTypesList(): List<Type> {
         return Db.dbQuery {
             TypeDao.selectAll().mapNotNull { toType(it) }
         }
     }
 
+    /**
+     * Returns a session type from the database by its ID.
+     */
     suspend fun getTypeById(id: Int): Type? {
         return Db.dbQuery {
             TypeDao.selectAll().where{
@@ -147,6 +178,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Returns a new session type into the database.
+     */
     suspend fun addType(type: Type): Type? {
         val key = Db.dbQuery {
             (TypeDao.insert {
@@ -156,12 +190,18 @@ class SessionRepository {
         return getTypeById(key)
     }
 
+    /**
+     * Deletes a session type from the database by its ID.
+     */
     suspend fun deleteTypeById(id: Int): Boolean {
         return Db.dbQuery {
             TypeDao.deleteWhere { (TypeDao.id eq id) } > 0
         }
     }
 
+    /**
+     * Converts a database row into a `Location` object.
+     */
     private fun toLocation(row: ResultRow): Location {
         return Location(
             id = row[LocationDao.id],
@@ -170,6 +210,9 @@ class SessionRepository {
         )
     }
 
+    /**
+     * Returns a list of all locations for event sessions by event ID from the database.
+     */
     suspend fun getEventLocationsList(eventId: Int): List<Location> {
         return Db.dbQuery {
             LocationDao.selectAll().where {
@@ -178,6 +221,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Returns session location by its ID from the database.
+     */
     suspend fun getLocationById(id: Int): Location? {
         return Db.dbQuery {
             LocationDao.selectAll().where{
@@ -186,6 +232,9 @@ class SessionRepository {
         }
     }
 
+    /**
+     * Inserts a new session location into the database.
+     */
     suspend fun addLocation(location: Location): Location? {
         val key = Db.dbQuery {
             (LocationDao.insert {
@@ -196,6 +245,9 @@ class SessionRepository {
         return getLocationById(key)
     }
 
+    /**
+     * Deletes session location by its ID from the database.
+     */
     suspend fun deleteLocationById(id: Int): Boolean {
         return Db.dbQuery {
             LocationDao.deleteWhere { (LocationDao.id eq id) } > 0
