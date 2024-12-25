@@ -10,12 +10,14 @@ class TypeService {
 
     var sessionRepository = SessionRepository()
 
-    suspend fun getTypesList(): List<Type> {
-        return sessionRepository.getTypesList()
+    suspend fun getTypesList(userId: Int): List<Type> {
+        val allTypesList: MutableList<Type> = sessionRepository.getUserTypesList(userId).toMutableList()
+        allTypesList.addAll(sessionRepository.getDefaultTypesList())
+        return allTypesList
     }
 
-    suspend fun addType(type: Type): Type {
-        var typeAdded = sessionRepository.addType(type)
+    suspend fun addType(userId: Int, type: Type): Type {
+        var typeAdded = sessionRepository.addType(userId, type)
         typeAdded ?: throw SomethingWentWrongException("Error when saving type.")
         return typeAdded
     }

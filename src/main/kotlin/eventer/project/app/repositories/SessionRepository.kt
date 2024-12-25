@@ -159,11 +159,24 @@ class SessionRepository {
     }
 
     /**
-     * Returns a list of all session types from the database.
+     * Returns a list of all custom session types for the given user from the database.
      */
-    suspend fun getTypesList(): List<Type> {
+    suspend fun getUserTypesList(userId: Int): List<Type> {
         return Db.dbQuery {
-            TypeDao.selectAll().mapNotNull { toType(it) }
+            TypeDao.selectAll().where{
+                TypeDao.userId eq userId
+            }.mapNotNull { toType(it) }
+        }
+    }
+
+    /**
+     * Returns a list of all default session types from the database.
+     */
+    suspend fun getDefaultTypesList(): List<Type> {
+        return Db.dbQuery {
+            TypeDao.selectAll().where{
+                TypeDao.userId.isNull()
+            }.mapNotNull { toType(it) }
         }
     }
 
@@ -181,10 +194,11 @@ class SessionRepository {
     /**
      * Returns a new session type into the database.
      */
-    suspend fun addType(type: Type): Type? {
+    suspend fun addType(userId: Int, type: Type): Type? {
         val key = Db.dbQuery {
             (TypeDao.insert {
                 it[name] = type.name!!
+                it[TypeDao.userId] = userId
             } get TypeDao.id)
         }
         return getTypeById(key)
