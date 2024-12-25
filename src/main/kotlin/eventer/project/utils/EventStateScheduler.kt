@@ -10,9 +10,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.util.concurrent.TimeUnit
 
-class EventStateScheduler() {
-
-    private var eventService = EventService()
+class EventStateScheduler(private val eventService: EventService) {
 
     private val scheduler = Scheduler(task = {
         CoroutineScope(Dispatchers.IO).launch {

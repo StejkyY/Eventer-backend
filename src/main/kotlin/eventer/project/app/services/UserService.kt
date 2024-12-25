@@ -1,6 +1,5 @@
 package eventer.project.app.services
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.AuthorizationException
 import eventer.project.app.errorhandler.NotFoundException
 import eventer.project.app.errorhandler.SomethingWentWrongException
@@ -10,11 +9,9 @@ import eventer.project.app.repositories.UserRepository
 import eventer.project.utils.JwtProvider
 import org.apache.commons.codec.digest.DigestUtils
 
-class UserService {
+class UserService(private val userRepository: UserRepository) {
 
     private val jwtProvider = JwtProvider
-
-    var userRepository = UserRepository()
 
     suspend fun getUserByEmail(email: String): User {
         val userFound = userRepository.getUserByEmail(email)

@@ -1,6 +1,5 @@
 package eventer.project.app.web.controllers
 
-import com.google.inject.Inject
 import eventer.project.app.models.dto.UserDTO
 import eventer.project.app.services.UserService
 import io.ktor.http.*
@@ -9,9 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import kotlinx.serialization.json.Json
 
-class AuthController {
-
-    var userService = UserService()
+class AuthController(private val userService: UserService) {
 
     /**
      * User login by given email and password.

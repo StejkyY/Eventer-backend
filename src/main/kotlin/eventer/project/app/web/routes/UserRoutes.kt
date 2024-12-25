@@ -4,10 +4,11 @@ import eventer.project.app.web.controllers.UserController
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
 fun Application.userRoutes() {
 
-    val userController = UserController()
+    val userController by inject<UserController>()
 
     routing {
         authenticate {

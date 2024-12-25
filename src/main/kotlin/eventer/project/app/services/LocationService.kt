@@ -1,14 +1,11 @@
 package eventer.project.app.services
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.NotFoundException
 import eventer.project.app.errorhandler.SomethingWentWrongException
 import eventer.project.app.models.objects.Location
 import eventer.project.app.repositories.SessionRepository
 
-class LocationService {
-
-    var sessionRepository = SessionRepository()
+class LocationService(private val sessionRepository: SessionRepository) {
 
     suspend fun getEventLocations(eventId: Int): List<Location> {
         return sessionRepository.getEventLocationsList(eventId)

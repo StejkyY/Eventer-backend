@@ -4,10 +4,12 @@ import eventer.project.app.web.controllers.TypeController
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
+import org.koin.java.KoinJavaComponent.inject
+import org.koin.ktor.ext.inject
 
 fun Application.typeRoutes() {
 
-    val typeController = TypeController()
+    val typeController by inject<TypeController>()
 
     routing {
         authenticate {

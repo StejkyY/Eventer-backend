@@ -1,6 +1,5 @@
 package eventer.project.app.web.controllers
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.MissingRequestBodyException
 import eventer.project.app.services.LocationService
 import io.ktor.http.*
@@ -8,9 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 
-class LocationController {
-
-    var locationService = LocationService()
+class LocationController(private val locationService: LocationService) {
 
     /**
      * Retrieves all session locations for an event by event ID given in request.

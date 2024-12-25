@@ -7,7 +7,7 @@ val hikariVersion: String by project
 val commonsCodecVersion: String by project
 val jdbcNamedParametersVersion: String by project
 val h2Version: String by project
-val guiceVersion: String by project
+val koinVersion: String by project
 val kweryVersion: String by project
 val valiktorVersion: String by project
 val jwtVersion: String by project
@@ -62,7 +62,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
     implementation("commons-codec:commons-codec:$commonsCodecVersion")
-    implementation("com.google.inject:guice:$guiceVersion")
+    implementation("io.insert-koin:koin-ktor:$koinVersion")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     implementation("org.valiktor:valiktor-core:$valiktorVersion")
     implementation("io.ktor:ktor-server-auth-jwt:$ktorVersion")
 }

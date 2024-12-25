@@ -1,18 +1,16 @@
 package eventer.project.app.web.controllers
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.MissingRequestBodyException
 import eventer.project.app.models.objects.User
 import eventer.project.app.services.TypeService
+import eventer.project.app.services.UserService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 
-class TypeController {
-
-   var typeService = TypeService()
+class TypeController(private val typeService: TypeService) {
 
     /**
      * Retrieves all session types for the currently authenticated user in a list

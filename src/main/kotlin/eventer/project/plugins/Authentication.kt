@@ -16,6 +16,8 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.config.*
 import kotlinx.serialization.json.Json
+import org.koin.java.KoinJavaComponent.inject
+import org.koin.ktor.ext.inject
 
 val applicationHttpClient = HttpClient(CIO) {
     install(ContentNegotiation) {
@@ -27,7 +29,7 @@ val redirects = mutableMapOf<String, String>()
 
 fun Application.configureAuthentication(httpClient: HttpClient = applicationHttpClient, config: ApplicationConfig) {
 
-    val userController = UserController()
+    val userController by inject<UserController>()
 
     install(Authentication) {
         jwt {

@@ -1,6 +1,5 @@
 package eventer.project.app.services
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.NotFoundException
 import eventer.project.app.errorhandler.SomethingWentWrongException
 import eventer.project.app.models.objects.Event
@@ -10,10 +9,9 @@ import eventer.project.app.models.objects.Session
 import eventer.project.app.repositories.EventRepository
 import eventer.project.app.repositories.SessionRepository
 
-class EventService() {
-
-    var eventRepository = EventRepository()
-    var sessionRepository = SessionRepository()
+class EventService(
+    private val eventRepository: EventRepository,
+    private val sessionRepository: SessionRepository) {
 
     suspend fun getAllEventsList(userId: Int, search: String?): List<Event> {
         val eventList = eventRepository.getEventsList()

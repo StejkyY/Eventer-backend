@@ -1,6 +1,5 @@
 package eventer.project.app.web.controllers
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.MissingRequestBodyException
 import eventer.project.app.models.dto.UserDTO
 import eventer.project.app.models.objects.User
@@ -11,9 +10,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 
-class UserController {
-
-    var userService = UserService()
+class UserController(private val userService: UserService) {
 
     /**
      * Retrieves the currently authenticated user.

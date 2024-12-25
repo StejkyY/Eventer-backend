@@ -3,15 +3,17 @@ package eventer.project.app.web.routes
 import eventer.project.app.web.controllers.EventController
 import eventer.project.app.web.controllers.LocationController
 import eventer.project.app.web.controllers.SessionController
+import eventer.project.app.web.controllers.UserController
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
 fun Application.eventRoutes() {
 
-    val eventController = EventController()
-    val sessionController = SessionController()
-    val locationController = LocationController()
+    val eventController by inject<EventController>()
+    val sessionController by inject<SessionController>()
+    val locationController by inject<LocationController>()
 
     routing {
         authenticate {

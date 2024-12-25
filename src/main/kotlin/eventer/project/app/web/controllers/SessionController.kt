@@ -1,17 +1,15 @@
 package eventer.project.app.web.controllers
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.MissingRequestBodyException
 import eventer.project.app.services.SessionService
+import eventer.project.app.services.TypeService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 
 
-class SessionController {
-
-   var sessionService = SessionService()
+class SessionController(private val sessionService: SessionService) {
 
     /**
      * Retrieves all sessions for an event by event ID in the request.

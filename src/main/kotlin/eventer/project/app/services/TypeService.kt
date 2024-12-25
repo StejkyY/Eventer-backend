@@ -1,14 +1,12 @@
 package eventer.project.app.services
 
-import com.google.inject.Inject
 import eventer.project.app.errorhandler.NotFoundException
 import eventer.project.app.errorhandler.SomethingWentWrongException
 import eventer.project.app.models.objects.Type
 import eventer.project.app.repositories.SessionRepository
+import eventer.project.app.repositories.UserRepository
 
-class TypeService {
-
-    var sessionRepository = SessionRepository()
+class TypeService(private val sessionRepository: SessionRepository) {
 
     suspend fun getTypesList(userId: Int): List<Type> {
         val allTypesList: MutableList<Type> = sessionRepository.getUserTypesList(userId).toMutableList()
