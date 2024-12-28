@@ -154,7 +154,8 @@ class SessionRepository {
     private fun toType(row: ResultRow): Type {
         return Type(
             id = row[TypeDao.id],
-            name = row[TypeDao.name]
+            name = row[TypeDao.name],
+            userId = row[TypeDao.userId]
         )
     }
 
